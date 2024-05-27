@@ -18,7 +18,7 @@ actions:
     partitiontype: gpt
     partitions:
       - name: esp
-        fs: fat32
+        fs: vfat
         start: 0%
         end: 512M
         flags: [ boot, esp ]
