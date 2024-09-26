@@ -1,9 +1,11 @@
 #!/bin/sh
 
-# Most of these functions were taken from kali-finish-install in the git repo
-# live-build-config, with some minor modifications. It should be kept in sync,
-# so please keep the diff minimal (no indent changes, no reword, no nitpick
-# of any sort).
+# Most of these functions were taken from the kali-finish-install script in the
+# git repo live-build-config [1], with some minor modifications.  It should be
+# kept in sync, so please keep the diff minimal (no indent changes, no reword,
+# no nitpick of any sort).
+#
+# [1]: https://gitlab.com/kalilinux/build-scripts/live-build-config
 #
 # This script MUST be idempotent.
 
