@@ -86,7 +86,7 @@ Build a Kali Linux VM image
 
 Build options:
   -a ARCH     Build an image for this architecture, default: amd64
-              Supported values: amd64 i386
+              Supported values: amd64
   -b BRANCH   Kali branch used to build the image, default: kali-rolling
               Supported values: kali-dev kali-last-snapshot kali-rolling
   -f FORMAT   Format to export the image to, default depends on the VARIANT

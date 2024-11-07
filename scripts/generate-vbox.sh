@@ -69,11 +69,6 @@ case $arch in
         os_type=Debian_64
         platform=x64
         ;;
-    i386)
-        long_mode=false
-        os_type=Debian
-        platform=x86
-        ;;
     *)
         fail "Invalid architecture '$arch'"
         ;;

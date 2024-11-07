@@ -59,10 +59,6 @@ case $arch in
         platform=x64
         guest_os=debian10-64
         ;;
-    i386)
-        platform=x86
-        guest_os=debian10
-        ;;
     *)
         fail "Invalid architecture '$arch'"
         ;;
@@ -90,14 +86,6 @@ sed \
     -e "s|%guestOS%|$guest_os|g" \
     -e "s|%nvram%|$nvram|g" \
     $machine_template > $output
-
-# Tweaks for i386, not sure it's really needed.
-if [ $arch = i386 ]; then
-    sed -i \
-        -e "/^ethernet0\.virtualDev/d" \
-        -e "/^vcpu\.hotadd/d" \
-        $output
-fi
 
 unmatched_patterns=$(grep -E -n "%[A-Za-z_]+%" $output || :)
 if [ "$unmatched_patterns" ]; then

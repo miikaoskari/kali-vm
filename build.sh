@@ -11,7 +11,7 @@ KNOWN_CACHING_PROXIES="\
 8000 squid-deb-proxy"
 DETECTED_CACHING_PROXY=
 
-SUPPORTED_ARCHITECTURES="amd64 i386"
+SUPPORTED_ARCHITECTURES="amd64"
 SUPPORTED_BRANCHES="kali-dev kali-last-snapshot kali-rolling"
 SUPPORTED_DESKTOPS="e17 gnome i3 kde lxde mate xfce none"
 SUPPORTED_TOOLSETS="default everything headless large none"

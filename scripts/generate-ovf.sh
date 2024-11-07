@@ -109,14 +109,6 @@ case $arch in
         product_version="$product_version x64"
         vbox_os_type=Debian_64
         ;;
-    i386)
-        long_mode=false
-        os_id=95
-        os_version=10
-        platform=x86
-        product_version="$product_version x86"
-        vbox_os_type=Debian
-        ;;
     *)
         fail "Invalid architecture '$arch'"
         ;;

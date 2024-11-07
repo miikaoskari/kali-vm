@@ -26,7 +26,6 @@ version=$(echo $name | sed -E 's/^kali-linux-(.+)-.+-.+$/\1/')
 
 case $arch in
     amd64) platform=x64 ;;
-    i386)  platform=x86 ;;
     *)
         fail "Invalid architecture '$arch'"
         ;;
