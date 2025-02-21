@@ -106,6 +106,16 @@ in_list() {
     return 1
 }
 
+valid_hostname() {
+    # Cf. hostname(7) and netcfg/netcfg-common.c from debian-installer
+    local name=$1
+    [[ $name =~ ^[A-Za-z0-9-]+$ ]] \
+        || return 1
+    [[ $name =~ ^-|-$ ]] \
+        && return 1
+    return 0
+}
+
 kali_message() {
     local line=
     echo "┏━━($(b $@))"
@@ -346,6 +356,9 @@ else
         || fail_invalid -v $DESKTOP
     in_list $TOOLSET $SUPPORTED_TOOLSETS \
         || fail_invalid -v $TOOLSET
+    # Validate hostname, cf. hostname(7)
+    valid_hostname "$HOSTNAME" \
+        || fail_invalid -H "$HOSTNAME" "must contain only letters, digits and hyphens"
     # Unpack USERPASS to USERNAME and PASSWORD
     echo $USERPASS | grep -q ":" \
         || fail_invalid -U $USERPASS "must be of the form <username>:<password>"
