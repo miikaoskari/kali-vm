@@ -1,12 +1,12 @@
 #!/bin/sh
 
-# Most of these functions were taken from the kali-finish-install script in the
-# git repo live-build-config [1], with some minor modifications.  It should be
-# kept in sync, so please keep the diff minimal (no indent changes, no reword,
-# no nitpick of any sort).
-#
-# [1]: https://gitlab.com/kalilinux/build-scripts/live-build-config
-#
+# The reference version of this script is maintained in:
+#   kali-installer/simple-cdd/profiles/kali.postinst
+#   kali-live/kali-config/common/includes.installer/kali-finish-install
+#   kali-live/kali-config/common/includes.chroot/usr/lib/live/config/0031-kali-user-setup
+#   kali-vm/scripts/finish-install.sh
+# (sometimes with small variations)
+
 # This script MUST be idempotent.
 
 set -e
@@ -73,10 +73,10 @@ configure_usergroups() {
 
     for user in $(get_user_list | grep -xv root); do
         echo "INFO: adding user '$user' to groups '$kali_groups'"
-	for grp in $kali_groups; do
-	    getent group $grp >/dev/null || continue
-	    usermod -a -G $grp $user
-	done
+        for grp in $kali_groups; do
+            getent group $grp >/dev/null || continue
+            usermod -a -G $grp $user
+        done
     done
 }
 
