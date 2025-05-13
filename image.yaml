@@ -135,11 +135,7 @@ actions:
   - description: "Fill unallocated blocks with zeroes"
     action: run
     chroot: false
-{{ if $uefi }}
-    script: scripts/zerofree.sh $IMAGE-part2
-{{ else }}
-    script: scripts/zerofree.sh $IMAGE-part1
-{{ end }}
+    script: scripts/zerofree.sh
 {{ end }}
 
   - description: "Export to a {{ $format }} image"
