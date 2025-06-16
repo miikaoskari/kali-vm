@@ -193,11 +193,11 @@ Let's also install the package `metasploit-framework`:
 
 - - -
 
-To set the `keyboard settings`, use the option -K.
-For the layout, pick values from the options listed under `! layout` of `/usr/share/X11/xkb/rules/xorg.lst` and separate them by commas.
-To additionally configure model, variant and options, pick values from the options listed under `! model`, `!variant` and `!option` of `/usr/share/X11/xkb/rules/xorg.lst`.
-Or check what's configured on your system with `cat /etc/default/keyboard`
-There is also a shortcut of `-K same` to match the host system.
+To set the `keyboard settings`, use the option `-K`.
+The setting is of the form `<layouts>/<models>/<variants>/<options>`. Each setting can be omitted (in that case the default is used), or can have multiple values separated by commas. In the most simple case, you might just want to change the keyboard layout, so you'd set `us` for a US keyboard layout, `de` for a German keyboard layout, and so on. Longer explanations and examples can be found in the `keyboard(5)` manual page.
+For the list of supported values, you can refer to the file `/usr/share/X11/xkb/rules/xorg.lst` (provided by the package `xkb-data` on Debian and Debian-like systems). This file has different sections (`! layout`,  `! model`, `!variant` and `!option`) that list the possible values for each setting.
+You can also check what's configured on your system with `cat /etc/default/keyboard`.
+There is also a shortcut of `-K same` to match the host system (ie. what's set in the file `/etc/default/keyboard`).
 
 To set the `locale`, use the option `-L`.
 Pick a value in the 1st column of `/usr/share/i18n/SUPPORTED`, or check what's configured on your system with `grep -v ^# /etc/locale.gen`, or simply `echo $LANG`.
