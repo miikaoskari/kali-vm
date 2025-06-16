@@ -104,11 +104,8 @@ Customization options:
   -D DESKTOP  Desktop environment installed in the image, default: xfce
               Supported values: e17 gnome i3 kde lxde mate xfce none
   -H HOSTNAME Set system host name, default: kali
-  -K KEYBOARD Set keyboard layout, default: en
-              For multiple layouts, use comma separated lists
-              For additionally configuring model, variant and options, use slash separated lists
-              If leaving one empty, the default will be kept
-              Example: us//nodeadkeys/grp:toggle,grp_led:scroll
+  -K KEYBOARD Set keyboard layout, default: us
+              Refer to the README.md for more details
   -L LOCALE   Set locale, default: en_US.UTF-8
   -P PACKAGES Install extra packages (comma/space separated list)
   -T TOOLSET  The selection of tools to include in the image, default: default

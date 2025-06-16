@@ -62,8 +62,7 @@ default_toolset() { [ ${DESKTOP:-$DEFAULT_DESKTOP} = none ] \
 default_version() { echo ${BRANCH:-$DEFAULT_BRANCH} | sed "s/^kali-//"; }
 get_keyboard() { (. /etc/default/keyboard 2>/dev/null \
     && echo "$XKBLAYOUT/$XKBMODEL/$XKBVARIANT/$XKBOPTIONS" \
-    || echo $DEFAULT_KEYBOARD);
-}
+    || echo $DEFAULT_KEYBOARD); }
 get_locale() { [ -v $LANG ] \
     && echo $LANG \
     || echo $DEFAULT_LOCALE; }
@@ -169,9 +168,11 @@ valid_keyboard() {
         fi
 
         return 0
-    else 
+    else
         # X11/XKB is not installed on all systems - the layout could still be valid, so no need to exit here
-        echo "Failed to validate keyboard because the file with allowed values is missing. This may happen because X11 is not installed (For example when building in container). The build may fail later on."
+        echo "Failed to validate keyboard because the file with allowed values is missing."
+        echo "This may happen because X11 is not installed (for example when building in container)."
+        echo "The build may fail later on if ever the keyboard settings are not valid."
         return 0
     fi
 }
@@ -268,10 +269,7 @@ Customization options:
               Supported values: $SUPPORTED_DESKTOPS
   -H HOSTNAME Set system host name, default: $(b $DEFAULT_HOSTNAME)
   -K KEYBOARD Set keyboard layout, default: $(b $DEFAULT_KEYBOARD)
-              For multiple layouts, use comma separated lists
-              For additionally configuring model, variant and options, use slash separated lists
-              If leaving one empty, the default will be kept
-              Example: us//nodeadkeys/grp:toggle,grp_led:scroll
+              Refer to the README.md for more details
   -L LOCALE   Set locale, default: $(b $DEFAULT_LOCALE)
   -P PACKAGES Install extra packages (comma/space separated list)
   -T TOOLSET  The selection of tools to include in the image, default: $(b $(default_toolset))
@@ -365,6 +363,7 @@ else
     [ "$BRANCH"   ] || BRANCH=$DEFAULT_BRANCH
     [ "$DESKTOP"  ] || DESKTOP=$DEFAULT_DESKTOP
     [ "$HOSTNAME" ] || HOSTNAME=$DEFAULT_HOSTNAME
+    [ "$KEYBOARD" ] || KEYBOARD=$DEFAULT_KEYBOARD
     [ "$LOCALE"   ] || LOCALE=$DEFAULT_LOCALE
     [ "$MIRROR"   ] || MIRROR=$DEFAULT_MIRROR
     [ "$TIMEZONE" ] || TIMEZONE=$DEFAULT_TIMEZONE
@@ -381,11 +380,10 @@ else
         || fail_invalid -v $DESKTOP
     in_list $TOOLSET $SUPPORTED_TOOLSETS \
         || fail_invalid -v $TOOLSET
-    # Validate hostname, cf. hostname(7)
     valid_hostname "$HOSTNAME" \
         || fail_invalid -H "$HOSTNAME" "must contain only letters, digits and hyphens"
     valid_keyboard "$KEYBOARD" \
-        || fail_invalid -H "$KEYBOARD" "must be of the form <layouts>/<models>/<variants>/<options> with valus listed in /usr/share/X11/xkb/rules/xorg.lst"
+        || fail_invalid -K "$KEYBOARD" "must be of the form <layouts>/<models>/<variants>/<options>, cf. README.md for details"
     # Unpack USERPASS to USERNAME and PASSWORD
     echo $USERPASS | grep -q ":" \
         || fail_invalid -U $USERPASS "must be of the form <username>:<password>"
