@@ -14,7 +14,12 @@ New-VM `
   -VHDPath $VHDPath
 
 Set-VM -Name "$Name" -Notes "$Description"
-Set-VM -Name "$Name" -EnhancedSessionTransportType HVSocket
+try {
+    ## Windows 11+ Pro/Enterprise and Windows Server 2022+
+    Set-VM -Name $Name -EnhancedSessionTransportType HVSocket #-ErrorAction Stop
+} catch {
+    Write-Warning "EnhancedSessionTransportType not supported on this system. Skipping..."
+}
 Set-VMFirmware -VMName "$Name" -EnableSecureBoot Off
 Set-VMProcessor -VMName "$Name" -Count 2
 Enable-VMIntegrationService -VMName "$Name" -Name "Guest Service Interface"
