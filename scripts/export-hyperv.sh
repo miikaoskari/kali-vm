@@ -31,17 +31,31 @@ info "Create install-vm.bat"
 cat << 'EOF' > install-vm.bat
 @echo off
 
+
+REM What happens in this script, says in this script
+setlocal
+
+
+REM Help, if needed
+REM echo [i] Help? https://www.kali.org/docs/virtualization/import-premade-hyperv/
+
+
 REM Check for administrative privileges
 net file 1>nul 2>nul
 if "%errorlevel%" == "0" (goto admin)
 
-REM Generate request UAC
+
+REM Generate UAC request & re-run self
 :elevate
+echo [-] Non-administrative
 powershell.exe Start-Process %~s0 -Verb runAs
 exit /B
 
+
 REM Run when administrative
 :admin
+REM Install VM
+echo [i] Importing VM to Hyper-V
 PowerShell -NoProfile -ExecutionPolicy Bypass -Command ""cd %~dp0; .\create-vm.ps1""
 pause
 EOF
