@@ -6,6 +6,18 @@ $Description = "%Description%"
 $SwitchName = "Default Switch"
 $VHDPath = ".\%VHDPath%"
 
+$ExistingSwitch = Get-VMSwitch -Name $SwitchName -ErrorAction SilentlyContinue
+if (-not $ExistingSwitch) {
+    Write-Warning "Virtual switch '$SwitchName' not found. Creating one..."
+    try {
+        New-VMSwitch -Name $SwitchName -SwitchType Internal | Out-Null
+        Write-Host "Created internal virtual switch '$SwitchName'"
+    } catch {
+        Write-Error "Failed to create virtual switch: $_"
+        exit 1
+    }
+}
+
 New-VM `
   -Generation 2 `
   -Name "$Name" `
