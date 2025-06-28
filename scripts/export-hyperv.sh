@@ -43,7 +43,7 @@ if "%errorlevel%" == "0" (goto admin)
 
 REM Generate UAC request & re-run self
 :elevate
-echo [-] Non-administrative
+echo [-] This is a non-administrative prompt. Re-trying...
 powershell.exe Start-Process %~s0 -Verb runAs
 exit /B
 
@@ -51,6 +51,7 @@ exit /B
 REM Run when administrative
 :admin
 REM Check if Hyper-V is installed/enabled
+echo [i] Looking for Hyper-V
 for /f "usebackq delims=" %%a in (`PowerShell -NoProfile -ExecutionPolicy Bypass -Command "$feature = Get-WindowsOptionalFeature -Online | Where-Object { $_.FeatureName -eq 'Microsoft-Hyper-V' }; $feature.State.ToString().ToLower()"`) do (
     set "hvstatus=%%a"
 )
@@ -71,7 +72,7 @@ if /i "%hvstatus%"=="enabled" (
   )
   echo.
   echo.
-  echo [i] Now reboot/restart
+  echo [i] Now manually reboot/restart
   pause
   exit /B
 ) else (
