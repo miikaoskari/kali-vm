@@ -81,6 +81,11 @@ if /i "%hvstatus%"=="enabled" (
 REM Install VM
 echo [i] Importing VM to Hyper-V
 PowerShell -NoProfile -ExecutionPolicy Bypass -Command ""cd %~dp0; .\create-vm.ps1""
+
+REM Open Hyper-V Manager
+:open
+echo [i] Opening Hyper-V Manager
+virtmgmt.msc
 pause
 EOF
 
