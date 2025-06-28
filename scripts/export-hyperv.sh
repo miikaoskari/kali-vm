@@ -31,16 +31,12 @@ info "Create install-vm.bat"
 cat << 'EOF' > install-vm.bat
 @echo off
 
-
-REM What happens in this script, says in this script
+REM What happens in this script, stays in this script
 setlocal
 
 
-REM Help, if needed
-REM echo [i] Help? https://www.kali.org/docs/virtualization/import-premade-hyperv/
-
-
 REM Check for administrative privileges
+echo [i] Checking for administrative access
 net file 1>nul 2>nul
 if "%errorlevel%" == "0" (goto admin)
 
