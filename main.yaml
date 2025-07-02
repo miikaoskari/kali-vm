@@ -14,8 +14,8 @@
 {{- $hostname := .hostname }}
 {{- $keyboard := .keyboard }}
 {{- $locale := .locale }}
-{{- $password := .password }}
 {{- $packages := .packages }}
+{{- $password := .password }}
 {{- $timezone := .timezone }}
 {{- $toolset := .toolset }}
 {{- $username := .username }}
