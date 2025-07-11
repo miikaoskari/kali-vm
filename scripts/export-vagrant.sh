@@ -92,6 +92,8 @@ case $variant in
         qemu-img convert -O vhdx "$ARTIFACTDIR/$image.raw" "$ARTIFACTDIR/$image.vhdx"
         info "Generate box.xml"
         "$SCRIPTSDIR/generate-xml.sh" "$ARTIFACTDIR/$image.vhdx"
+        # HACK! We know that user/pass is not kali/kali but vagrant/vagrant
+        sed -E -i 's/(Username|Password): kali/\1: vagrant/' "$ARTIFACTDIR/$image.xml"
         mkdir "$WORKSPACEDIR/Virtual Hard Disks/"
         mkdir "$WORKSPACEDIR/Virtual Machines/"
         mv "$ARTIFACTDIR/$image.vhdx" "$WORKSPACEDIR/Virtual Hard Disks/"
@@ -110,6 +112,8 @@ case $variant in
         vagrantfile=$vagrantfile_virtualbox
         info "Generate $image.vmdk, $image.ovf and $image.mf"
         "$SCRIPTSDIR/export-ovf.sh" "$ARTIFACTDIR/$image"
+        # HACK! We know that user/pass is not kali/kali but vagrant/vagrant
+        sed -E -i 's/(Username|Password): kali/\1: vagrant/' "$ARTIFACTDIR/$image.ovf"
         mv "$ARTIFACTDIR/$image.vmdk" "$ARTIFACTDIR/$image.ovf" "$ARTIFACTDIR/$image.mf" \
             "$WORKSPACEDIR/"
         ;;
@@ -121,6 +125,8 @@ case $variant in
             "$ARTIFACTDIR/$image.raw" "$WORKSPACEDIR/$image.vmdk"
         info "Generate $image.vmx"
         "$SCRIPTSDIR/generate-vmx.sh" "$WORKSPACEDIR/$image.vmdk"
+        # HACK! We know that user/pass is not kali/kali but vagrant/vagrant
+        sed -E -i 's/(Username|Password): kali/\1: vagrant/' "$WORKSPACEDIR/$image.vmx"
         ;;
     *)
         fail "ERROR: Unsupported variant '$variant'"
