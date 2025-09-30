@@ -56,6 +56,11 @@ actions:
       - kali-desktop-{{ $desktop }}
 {{ end }}
 
+  - description: "Install fish shell"
+    action: apt
+    recommends: true
+    packages: [ fish ]
+
 {{ if ne $toolset "none" }}
   - description: "Install tool selection: {{ $toolset }}"
     action: apt
@@ -87,7 +92,7 @@ actions:
   - description: "Finish installation"
     action: run
     chroot: true
-    script: scripts/finish-install.sh debconf etc-hosts terminal usergroups zsh
+    script: scripts/finish-install.sh debconf etc-hosts terminal usergroups fish
 
   - description: "Final cleanup (from within)"
     action: run

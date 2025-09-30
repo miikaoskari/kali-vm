@@ -58,6 +58,21 @@ configure_zsh() {
     done
 }
 
+configure_fish() {
+    if grep -q 'nofish' /proc/cmdline; then
+        echo "INFO: user opted out of fish by default"
+        return
+    fi
+    if [ ! -x /usr/bin/fish ]; then
+        echo "INFO: /usr/bin/fish is not available"
+        return
+    fi
+    for user in $(get_user_list); do
+        echo "INFO: changing default shell of user '$user' to fish"
+        chsh --shell /usr/bin/fish $user
+    done
+}
+
 configure_usergroups() {
     # Ensure those groups exist
     addgroup --system kaboxer || true
@@ -137,6 +152,7 @@ while [ $# -ge 1 ]; do
         terminal)    configure_terminal ;;
         usergroups)  configure_usergroups ;;
         zsh)         configure_zsh ;;
+        fish)        configure_fish ;;
         *) echo "ERROR: Unsupported argument '$1'"; exit 1 ;;
     esac
     shift
